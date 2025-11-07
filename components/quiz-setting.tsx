@@ -25,12 +25,14 @@ function QuizSetting({
     onToggle,
     reviewMode,
     isShowReviewMode,
+    isShowStopButton,
 }: {
     collectionId: number | undefined;
     onClose: () => void;
     onToggle: () => void;
     reviewMode: boolean;
     isShowReviewMode?: boolean;
+    isShowStopButton?: boolean;
 }) {
     const isAutoSound = useSelector((state: RootState) => state.sound.autoSound);
     const router = useRouter();
@@ -111,9 +113,11 @@ function QuizSetting({
 
             {/* Stop Learning Button */}
 
-            <Button type="dangerous" onPress={handleStopLearning}>
-                🛑 Dừng học danh sách này
-            </Button>
+            {isShowStopButton && (
+                <Button type="dangerous" onPress={handleStopLearning}>
+                    🛑 Dừng học danh sách này
+                </Button>
+            )}
         </View>
     );
 }

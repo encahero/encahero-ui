@@ -210,6 +210,7 @@ function QuizScreen() {
                         onToggle={toggleReviewMode}
                         reviewMode={isReviewMode}
                         isShowReviewMode={!(currentCollection?.status === 'completed')}
+                        isShowStopButton={!(currentCollection?.status === 'completed')}
                     />
                 </ModalBottomSheet>
 
