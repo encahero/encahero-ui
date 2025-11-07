@@ -12,7 +12,6 @@ export function useFetchQuiz(collectionId?: number, isReview?: boolean, isRefetc
     const { showErrorToast } = useToast();
 
     const quizListLength = useRef<number>(0);
-
     const fetchQuiz = async () => {
         if (!collectionId) return;
 
@@ -44,7 +43,7 @@ export function useFetchQuiz(collectionId?: number, isReview?: boolean, isRefetc
                 return 0;
             }
         });
-    }, [quizListLength]);
+    }, [quizListLength, collectionId]);
 
     return { quizList, currentIndex, fetchQuiz, handleSkip, setCurrentIndex };
 }

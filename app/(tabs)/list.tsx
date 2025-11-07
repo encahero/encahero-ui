@@ -25,7 +25,7 @@ function List() {
     }, [collections]);
 
     const { data: allList = [] } = useQuery({
-        queryKey: ['allList'],
+        queryKey: ['popular-list'],
         queryFn: collectionService.getAllCollection,
     });
 

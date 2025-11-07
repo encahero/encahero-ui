@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { register } from '@/store/action/learning-list-action';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -22,9 +22,11 @@ const DEFAULT_GOAL = 20;
 function FastRegister() {
     const { showErrorToast } = useToast();
     const { data: popularList = [] } = useQuery({
-        queryKey: ['allList'],
+        queryKey: ['popular-list'],
         queryFn: collectionService.getAllCollection,
     });
+
+    const queryClient = useQueryClient();
 
     const filterCollections = popularList.filter((item: any) => item.is_registered === false);
     const white = useThemeColor({}, 'white');
@@ -36,7 +38,6 @@ function FastRegister() {
     const handlePressLearnNow = async (collectionId: number) => {
         try {
             const res = await collectionService.registerCollection(collectionId, DEFAULT_GOAL);
-            console.log({ res });
             if (res) {
                 dispatch(
                     register({
@@ -55,6 +56,7 @@ function FastRegister() {
                     }),
                 );
                 router.replace(`/quiz/${collectionId}`);
+                queryClient.invalidateQueries({ queryKey: ['popular-list'] });
             } else {
                 throw new Error('Đăng ký bài học không thành công. Vui lòng thử lại.');
             }
